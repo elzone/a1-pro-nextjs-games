@@ -6,7 +6,8 @@ type GameInfoItemProps = {
 const GameInfoItem = ({ name, content }: GameInfoItemProps) => {
   return (
     <div className={`flex gap-2`}>
-      <span className={`font-bold`}>{name}</span> {content}
+      <span className={`font-bold`}>{name}</span>
+      {content}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { GameDataType } from "@/components/for-pages/games/types/game-data.type";
 import { GameInfoItem } from "@/components/for-pages/games/game-info/game-info-item";
 import Image from "next/image";
+import { GameInfoItemImage } from "@/components/for-pages/games/game-info/game-info-item-image";
 
 type GameInfoProps = {
   gameData: GameDataType;
@@ -16,14 +17,7 @@ const GameInfo = ({ gameData }: GameInfoProps) => {
       <GameInfoItem name={`Name:`} content={title} />
       <GameInfoItem name={`Provider:`} content={provider} />
       <GameInfoItem name={`Categories:`} content={categories.join(", ")} />
-      <Image
-        priority
-        src={`https://d2norla3tyc4cn.cloudfront.net/i/s3/${identifier}.webp`}
-        alt={`${title} - cover`}
-        className={`w-full`}
-        width={250}
-        height={250}
-      />
+      <GameInfoItemImage identifier={identifier} title={title} />
     </div>
   );
 };
