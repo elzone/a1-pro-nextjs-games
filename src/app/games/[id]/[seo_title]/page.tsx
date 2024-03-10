@@ -12,19 +12,14 @@ const getData = async () => {
   return [];
 };
 
-const getSeoTitle = (slug: string[]) => {
-  return slug.slice(-1)[0];
-};
-
 export const generateMetadata = async ({
   params,
 }: {
-  params: { slug: string[] };
+  params: { id: string; seo_title: string };
 }) => {
-  const { slug } = params;
-  const seoTitle: string = getSeoTitle(slug);
+  const { seo_title } = params;
 
-  const title = seoTitle ? seoTitle : "Default Title";
+  const title = seo_title ?? "Default Title";
 
   const description = "";
 
@@ -43,27 +38,31 @@ export async function generateStaticParams() {
 
   return gamesData.map((gameData) => {
     const { categories, provider, seo_title } = gameData;
+    const allIds: string[] = [...categories, provider];
 
     if (categories && categories.length > 0) {
-      return categories.map((category) => ({ provider, category, seo_title }));
+      return categories.map((category) => ({ id: category, seo_title }));
     }
     return {
-      provider,
+      id: provider,
       seo_title,
     };
   });
 }
 
-const GamePage = async ({ params }: { params: { slug: string[] } }) => {
+const GamePage = async ({
+  params,
+}: {
+  params: { id: string; seo_title: string };
+}) => {
   const gamesData: GameDataType[] = await getData();
 
   if (!gamesData) {
     return <>No data found</>;
   }
 
-  const { slug } = params;
-  const seoTitle: string = getSeoTitle(slug);
-  const gameData = gamesData.find((game) => game.seo_title === seoTitle);
+  const { seo_title } = params;
+  const gameData = gamesData.find((game) => game.seo_title === seo_title);
 
   if (!gameData) {
     return <>No game info found</>;

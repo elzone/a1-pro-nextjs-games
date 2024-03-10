@@ -1,5 +1,5 @@
 const IndexPage = () => {
-  return <></>;
+  return <>Games</>;
 };
 
 export default IndexPage;
